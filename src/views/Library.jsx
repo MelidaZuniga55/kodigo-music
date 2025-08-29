@@ -8,7 +8,7 @@ const Library = ({ library, setLibrary, setCurrentSong, setIsPlaying }) => {
 
   return (
     <div className="library">
-      <h1>Your Library</h1>
+      <h1>Tu librería 🎶</h1>
       {library.length === 0 ? <p>No songs in your library yet.</p> : null}
       <div className="music-grid">
         {library.map((song, idx) => (
@@ -17,10 +17,10 @@ const Library = ({ library, setLibrary, setCurrentSong, setIsPlaying }) => {
               song={song} 
               setCurrentSong={setCurrentSong} 
               setIsPlaying={setIsPlaying} 
+              library={library} 
+              setLibrary={setLibrary} 
+              inLibrary={true} 
             />
-            <button className="remove-btn" onClick={() => removeSong(song.title)}>
-              <i className="bi bi-trash-fill"></i> Remove
-            </button>
           </div>
         ))}
       </div>

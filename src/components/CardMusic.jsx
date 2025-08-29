@@ -1,15 +1,26 @@
 import React from "react";
 
-const CardMusic = ({ song, setCurrentSong, setIsPlaying, library, setLibrary }) => {
+const CardMusic = ({ 
+  song, 
+  setCurrentSong, 
+  setIsPlaying, 
+  library, 
+  setLibrary, 
+  inLibrary = false,  //  si viene de Library.jsx
+}) => {
   const playSong = () => {
     setCurrentSong(song);
     setIsPlaying(true);
   };
 
   const addToLibrary = () => {
-    if (!library.some(s => s.title === song.title)) {
+    if (!library.some((s) => s.title === song.title)) {
       setLibrary([...library, song]);
     }
+  };
+
+  const removeFromLibrary = () => {
+    setLibrary(library.filter((s) => s.title !== song.title));
   };
 
   return (
@@ -20,8 +31,19 @@ const CardMusic = ({ song, setCurrentSong, setIsPlaying, library, setLibrary }) 
         <p>{song.artist}</p>
       </div>
       <div className="card-buttons">
-        <button onClick={playSong}><i className="bi bi-play-fill"></i> Play</button>
-        <button onClick={addToLibrary}><i className="bi bi-bookmark-plus-fill"></i> Add</button>
+        <button onClick={playSong}>
+          <i className="bi bi-play-fill"></i> Play
+        </button>
+
+        {inLibrary ? (
+          <button className="remove-btn" onClick={removeFromLibrary}>
+            <i className="bi bi-trash-fill"></i> Remove
+          </button>
+        ) : (
+          <button onClick={addToLibrary}>
+            <i className="bi bi-bookmark-plus-fill"></i> Add
+          </button>
+        )}
       </div>
     </div>
   );

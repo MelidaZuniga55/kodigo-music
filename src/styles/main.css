@@ -1,11 +1,29 @@
-/* ---------------------------- General ---------------------------- */
-body, html {
+/* ---------------------------- Variables Globales ---------------------------- */
+:root {
+  --primary: #1db954;
+  --primary-hover: #1ed760;
+  --danger: #ff4d4d;
+  --danger-hover: #e63939;
+  --bg-dark: #121212;
+  --bg-card: #181818;
+  --bg-hover: #242424;
+  --text-light: #ffffff;
+  --text-muted: #b3b3b3;
+  --radius: 16px;
+  --shadow-sm: 0 2px 6px rgba(0,0,0,0.25);
+  --shadow-md: 0 6px 18px rgba(0,0,0,0.35);
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.5);
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #121212;
-  color: white;
+  font-family: "Segoe UI", "Inter", sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
   height: 100%;
+  line-height: 1.5;
 }
 
 .app {
@@ -16,7 +34,7 @@ body, html {
 
 .main-content {
   flex: 1;
-  padding: 20px;
+  padding: 32px;
 }
 
 /* ---------------------------- Navbar ---------------------------- */
@@ -24,93 +42,128 @@ body, html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
-  background: linear-gradient(90deg, #1db954, #1ed760);
-  border-radius: 0 0 15px 15px;
+  padding: 20px 36px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-hover));
+  border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: var(--shadow-md);
 }
 
 .navbar-links {
   display: flex;
+  gap: 28px;
+}
+
+.navbar-links a {
+  color: var(--text-light);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  position: relative;
+  transition: var(--transition);
+}
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--text-light);
+  transition: width var(--transition);
+}
+
+.navbar-links a:hover::after,
+.active-link::after {
+  width: 100%;
+}
+
+/* ---------------------------- Footer Player ---------------------------- */
+.footer-player-container {
+  background-color: var(--bg-card);
+  padding: 14px 28px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 20px;
 }
 
-.active-link {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
-/* ---------------------------- Footer / Player ---------------------------- */
-.footer-player-container {
-  background-color: #1a1a1a;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: 0 -3px 10px rgba(0,0,0,0.5);
-}
-
-.footer-player-container .song-info {
+.song-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
+  flex: 1;
 }
 
 .album-cover {
-  width: 50px;
-  height: 50px;
-  border-radius: 5px;
-  animation: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: var(--shadow-sm);
 }
 
 .album-cover.rotate {
-  animation: spin 4s linear infinite;
+  animation: spin 6s linear infinite;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.footer-player-container .song-text {
+.song-text {
   display: flex;
   flex-direction: column;
 }
 
-.footer-player-container .controls {
+.song-text strong {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.song-text span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.controls {
   display: flex;
-  gap: 10px;
-  margin-top: 5px;
+  align-items: center;
+  gap: 18px;
 }
 
-.footer-player-container .controls button {
-  background-color: #1db954;
+.controls button {
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  font-size: 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition);
 }
 
-.footer-player-container .controls button:hover {
-  background-color: #17a44d;
+.controls button i {
+  font-size: 22px;
+  color: var(--text-light);
 }
 
-.footer-player-container .progress-bar {
-  background-color: #2c2c2c;
+.controls button:hover {
+  transform: scale(1.15);
+  color: var(--primary);
+}
+
+.progress-bar {
+  position: relative;
+  flex: 1;
   height: 6px;
-  border-radius: 3px;
+  background-color: #333;
+  border-radius: 4px;
   overflow: hidden;
-  margin-top: 5px;
 }
 
-.footer-player-container .progress {
+.progress {
   height: 100%;
-  background-color: #1db954;
+  background: var(--primary);
   width: 0%;
-  transition: width 0.5s linear;
+  transition: width 0.3s linear;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ---------------------------- Login ---------------------------- */
@@ -119,140 +172,148 @@ body, html {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #1db954, #191414);
+  background: radial-gradient(circle at top left, var(--primary), #191414);
 }
 
 .login-form {
-  background-color: #1f1f1f;
-  padding: 40px;
-  border-radius: 15px;
+  background-color: var(--bg-card);
+  padding: 48px;
+  border-radius: var(--radius);
   width: 100%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  gap: 18px;
+  box-shadow: var(--shadow-lg);
+  animation: fadeIn 0.6s ease forwards;
 }
 
 .login-form input {
-  padding: 10px 15px;
-  border-radius: 10px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
   border: none;
-  background-color: #2c2c2c;
-  color: white;
+  background-color: var(--bg-hover);
+  color: var(--text-light);
+  font-size: 0.95rem;
+  transition: var(--transition);
 }
 
-.login-form input::placeholder {
-  color: #aaa;
+.login-form input:focus {
+  outline: 2px solid var(--primary);
 }
 
 .login-form button {
-  padding: 12px;
+  padding: 14px;
   border: none;
-  border-radius: 10px;
-  background-color: #1db954;
+  border-radius: var(--radius);
+  background: var(--primary);
   font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition);
+  color: white;
 }
 
 .login-form button:hover {
-  background-color: #17a44d;
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
 }
 
 .error {
-  color: #ff4d4d;
-  font-size: 12px;
+  color: var(--danger);
+  font-size: 0.85rem;
 }
 
 /* ---------------------------- Cards ---------------------------- */
 .music-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 20px;
-}
-
-.scroll-horizontal {
-  display: flex;
-  overflow-x: auto;
-  gap: 15px;
-  padding-bottom: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 24px;
 }
 
 .card-music {
-  background-color: #1f1f1f;
-  padding: 15px;
-  border-radius: 15px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  min-width: 180px;
+  background-color: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  position: relative;
 }
 
 .card-music:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 25px rgba(0,0,0,0.5);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  background-color: var(--bg-hover);
 }
 
 .album-art-img {
   width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  aspect-ratio: 1/1;
   object-fit: cover;
+  display: block;
+}
+
+.card-music .card-content {
+  padding: 14px;
+  text-align: center;
+}
+
+.card-music h3 {
+  margin: 8px 0 4px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.card-music p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 .card-buttons {
   display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
+  justify-content: space-around;
+  padding: 10px;
 }
 
 .card-buttons button {
-  flex: 1;
-  margin: 0 2px;
-  padding: 6px 10px;
+  background-color: var(--primary);
   border: none;
-  border-radius: 10px;
-  background-color: #1db954;
+  border-radius: 8px;
+  padding: 6px 10px;
   color: white;
-  font-weight: bold;
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: var(--transition);
 }
 
 .card-buttons button:hover {
-  background-color: #17a44d;
+  background-color: var(--primary-hover);
+  transform: scale(1.05);
 }
 
-/* Library specific */
-.card-library {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+/* Botón de remover específico */
+.card-buttons .remove-btn {
+  background-color: var(--danger);
 }
 
-.remove-btn {
-  padding: 6px;
-  border: none;
-  border-radius: 10px;
-  background-color: #ff4d4d;
-  color: white;
-  cursor: pointer;
+.card-buttons .remove-btn:hover {
+  background-color: var(--danger-hover);
+  transform: scale(1.05);
 }
 
-.remove-btn:hover {
-  background-color: #e63939;
-}
-
-/* ---------------------------- Headings ---------------------------- */
-h1 {
-  margin-bottom: 20px;
+/* ---------------------------- Animations ---------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ---------------------------- Responsive ---------------------------- */
 @media (max-width: 768px) {
   .navbar {
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
+    text-align: center;
   }
 
   .navbar-links {
@@ -260,16 +321,13 @@ h1 {
     gap: 10px;
   }
 
-  .scroll-horizontal {
-    gap: 10px;
+  .footer-player-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
-}
 
-.card-buttons i, .remove-btn i, .footer-player-container .controls i {
-  margin-right: 5px;
-  vertical-align: middle;
-}
-
-.footer-player-container .controls button i {
-  font-size: 18px;
+  .controls {
+    gap: 12px;
+  }
 }

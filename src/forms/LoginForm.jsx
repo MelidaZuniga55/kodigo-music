@@ -28,11 +28,18 @@ const LoginForm = ({ setUser }) => {
       {errors.email && <small className="error">{errors.email.message}</small>}
 
       <input
-        type="password"
-        placeholder="Contraseña"
-        {...register("password", { required: "La contraseña es requerida", minLength: { value: 6, message: "Minimo 6 caracteres" } })}
-      />
-      {errors.password && <small className="error">{errors.password.message}</small>}
+  type="password"
+  placeholder="Contraseña"
+  {...register("password", { 
+    required: "La contraseña es requerida", 
+    minLength: { value: 6, message: "Mínimo 6 caracteres" },
+    pattern: {
+      value: /^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/,
+      message: "La contraseña debe tener al menos una letra mayúscula y un carácter especial"
+    }
+  })}
+/>
+{errors.password && <small className="error">{errors.password.message}</small>}
 
       <button type="submit">Login</button>
     </form>
